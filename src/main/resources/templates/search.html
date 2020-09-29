@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+        <body style="background-color:grey">
+            <div>
+                <p>Search for your case here:</p>
+
+                <form style="display:block" method="get" action="search">
+                    <input name="caseNumber" type="text" placeholder="Dosar"/>
+                    <button class="btn-search" type="submit">Search</button>
+                  </form>
+                <p th:text=${errorMessage}>Search for your case here:</p>
+                <table>
+                    <thead>
+                    <th:tr>
+                        <th> Number </th>
+                        <th> Link </th>
+                    </th:tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="caseNumber : ${caseNumbers}">
+                        <td><span th:text="${number}">  </span></td>
+                        <td><a th:href="${caseNumber.getUrl()}", th:text="${caseNumber.getUrl()}">  </a></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </body>
+</html>
