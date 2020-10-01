@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DosarUtils {
-    private static final String PATH_TO_DIRECTORY = "/Users/sl/Desktop/PDFs/";
+    private static final String PATH_TO_DIRECTORY = "/tmp";
 
     /*
     / Parsing PDF documents that are contained in a folder
