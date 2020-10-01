@@ -11,7 +11,7 @@ public class Ordin {
     private int id;
     private String url;
     @ElementCollection
-    @CollectionTable(name="ordin_casenumbers") // 2
+    @CollectionTable(name = "ordin_casenumbers") // 2
     @Column(name = "casenumbers")
 
     private List<String> caseNumbers;
@@ -36,5 +36,4 @@ public class Ordin {
         this.caseNumbers = caseNumbers;
         return this;
     }
-
 }

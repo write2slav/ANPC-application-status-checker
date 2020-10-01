@@ -20,33 +20,34 @@ public class AncpApplication {
 		SpringApplication.run(AncpApplication.class, args);
 	}
 	// TEST
-	@Autowired
-	private OrdinsRepo ordinsRepo;
-
-	@Scheduled(fixedRateString = "PT12H")
-	void updateDB(){
-
-		System.out.println("Task started");
-		//Compare list of urls from DB and url list on ANCP website
-		List<String> currentUrls = DosarUtils.getListOfURLsFromANPC();
-		List<Ordin> ordinsInDB = (List<Ordin>) ordinsRepo.findAll();
-
-		if (currentUrls.size() > ordinsInDB.size()) {
-			System.out.println("Adding missing ordins to DB");
-
-			List<String> missingUrls = currentUrls.stream().limit(currentUrls.size() - ordinsInDB.size()).collect(Collectors.toList());
-
-			missingUrls.stream().forEach(System.out::println);
-			DosarUtils.downloadPDFfilesFromList(missingUrls);
-			List<Ordin> ordins = DosarUtils.convertoOrdinsObjects(DosarUtils.getOrdinsTextFromPDFFiles());
-			ordinsRepo.saveAll(ordins);
-		}
-
-		System.out.println("Task is finished");
-
-	}
-	@Configuration
-	@EnableScheduling
-	class ShadualingConfinuration{
-	}
+//	@Autowired
+//	private OrdinsRepo ordinsRepo;
+//
+//	@Scheduled(fixedRateString = "PT12H")
+//	void updateDB(){
+//
+//		System.out.println("Task started");
+//		//Compare list of urls from DB and url list on ANCP website
+//		List<String> currentUrls = DosarUtils.getListOfURLsFromANPC();
+//		List<Ordin> ordinsInDB = (List<Ordin>) ordinsRepo.findAll();
+//
+//		if (currentUrls.size() > ordinsInDB.size()) {
+//			System.out.println("Adding missing ordins to DB");
+//
+//			List<String> missingUrls = currentUrls.stream().limit(currentUrls.size() - ordinsInDB.size()).collect(Collectors.toList());
+//
+//			missingUrls.stream().forEach(System.out::println);
+//			DosarUtils.downloadPDFfilesFromList(missingUrls);
+//			List<Ordin> ordins = DosarUtils.convertoOrdinsObjects(DosarUtils.getOrdinsTextFromPDFFiles());
+//			ordinsRepo.saveAll(ordins);
+//		}
+//
+//		System.out.println("Task is finished");
+//
+//	}
+//
+//	@Configuration
+//	@EnableScheduling
+//	public class ShadualingConfinuration{
+//	}
 }
