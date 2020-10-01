@@ -67,7 +67,6 @@ public class DosarUtils {
         System.out.println("Deleting files");
         Arrays.stream(new File(PATH_TO_DIRECTORY).listFiles()).forEach(File::delete);
 
-        listOfOrdins.stream().forEach(System.out::println);
         return listOfOrdins;
     }
 
@@ -110,8 +109,10 @@ public class DosarUtils {
         //Counter to increment name of saved filed.
         int counter = 1;
         for (String pdfURL : listOfURLs) {
+
+            // No more than 15 files
+            if(counter==15) break;
             System.out.println(pdfURL);
-            if(counter==3) break;
             try {
                 System.out.println("Opening connection");
                 URL url = new URL(pdfURL);

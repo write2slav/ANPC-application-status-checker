@@ -24,7 +24,7 @@ public class AncpApplication {
 	@Autowired
 	private OrdinsRepo ordinsRepo;
 
-	@Scheduled(fixedRateString = "PT2M")
+	@Scheduled(fixedRateString = "PT200M")
 	void updateDB(){
 
 		System.out.println("Task started");
