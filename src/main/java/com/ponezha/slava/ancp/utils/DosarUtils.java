@@ -67,6 +67,7 @@ public class DosarUtils {
         System.out.println("Deleting files");
         Arrays.stream(new File(PATH_TO_DIRECTORY).listFiles()).forEach(File::delete);
 
+        listOfOrdins.stream().forEach(System.out::println);
         return listOfOrdins;
     }
 
