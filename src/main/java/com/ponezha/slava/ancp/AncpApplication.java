@@ -19,7 +19,7 @@ public class AncpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AncpApplication.class, args);
 	}
-
+	// TEST
 	@Autowired
 	private OrdinsRepo ordinsRepo;
 
