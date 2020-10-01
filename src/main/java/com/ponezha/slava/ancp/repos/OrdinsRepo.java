@@ -10,6 +10,6 @@ import java.util.List;
 public interface OrdinsRepo extends CrudRepository<Ordin, Integer> {
     @Query(value = "SELECT * FROM ordins\n" +
             "INNER JOIN ordin_casenumbers ON ordins.id = ordin_casenumbers.ordin_id\n" +
-            "WHERE casenumbers = :name ", nativeQuery = true)
+            "WHERE casenumber = :name ", nativeQuery = true)
     List<Ordin> findByCaseNumber(@Param("name") String caseNumber);
 }

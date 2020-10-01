@@ -10,10 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,7 +109,8 @@ public class DosarUtils {
         //Counter to increment name of saved filed.
         int counter = 1;
         for (String pdfURL : listOfURLs) {
-
+            System.out.println(pdfURL);
+            if(counter==3) break;
             try {
                 System.out.println("Opening connection");
                 URL url = new URL(pdfURL);
@@ -141,10 +139,10 @@ public class DosarUtils {
     /*
     / Converting a list of String Ordins to a list of Ordins objects.
     */
-    public static List<Ordin> convertoOrdinsObjects(List<String> listOfStringOrdins) {
+    public static List<Ordin> convertoOrdinsObjects(List<String> listOfStringOrdins, List<String>urls) {
         System.out.println("Conversion started");
 
-        List<String> urls = DosarUtils.getListOfURLsFromANPC();
+        //List<String> urls = DosarUtils.getListOfURLsFromANPC();
         List<Ordin> listOfOrdins = new ArrayList<Ordin>();
 
 
@@ -171,7 +169,6 @@ public class DosarUtils {
         }
         System.out.println("Conversion finished");
         System.out.println("Number of ordins processed :" + listOfStringOrdins.size());
-        System.out.println(listOfOrdins.toString());
 
         return listOfOrdins;
     }

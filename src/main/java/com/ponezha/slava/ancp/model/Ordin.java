@@ -12,11 +12,15 @@ public class Ordin {
     private String url;
     @ElementCollection
     @CollectionTable(name = "ordin_casenumbers") // 2
-    @Column(name = "casenumbers")
+    @Column(name = "casenumber")
 
     private List<String> caseNumbers;
 
     public Ordin() {
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public String getUrl() {
