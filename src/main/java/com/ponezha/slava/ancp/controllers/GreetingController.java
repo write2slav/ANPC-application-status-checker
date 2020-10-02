@@ -34,7 +34,6 @@ public class GreetingController {
             return "search";
         } else {
             model.addAttribute("message", "Ваш досар найден в приказе:");
-            model.addAttribute("number", name);
             model.addAttribute("caseNumber", ordinsRepo.findByCaseNumber(name).get(0));
             return "search";
         }
