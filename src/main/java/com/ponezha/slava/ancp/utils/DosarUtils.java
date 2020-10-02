@@ -35,7 +35,6 @@ public class DosarUtils {
 
         //Sorting files
         System.out.println("Sorting files");
-
         Arrays.sort(listOfPdfFiles, Comparator.comparingLong(File::lastModified));
 
         //Step three: Create a list to store passed Ordins(PDF with decisions)
@@ -79,6 +78,7 @@ public class DosarUtils {
         final String URL = "http://cetatenie.just.ro/index.php/ro/ordine/articol-11";
         final String baseURL = "http://cetatenie.just.ro/";
         Document doc = null;
+
         try {
             doc = Jsoup.connect(URL).get();
         } catch (IOException e) {
@@ -88,14 +88,13 @@ public class DosarUtils {
         //Step two: Use Css selector to select all the <a> elements that contain "images" in "href attribute.CSS selector: div a[href*="images"].
         Elements linkElements = doc.select("div a[href*=\"images\"]");
 
-        // List for storing string values of URLs that lead to PDF files of decisions made by ANPC.
-
-
         // Step three: concatinating link of PDF resource to base URL.
-
         // List for storing string values of URLs that lead to PDF files of decisions made by ANPC.
         List<String> listOfURLs = new ArrayList<String>();
+
         //Adding base URL to the link
+        //Using stream:
+        //linkElements.stream().forEach(element -> listOfURLs.add(baseURL + element.attr("href")));
         for (Element element : linkElements) listOfURLs.add(baseURL + element.attr("href"));
 
         return listOfURLs;
@@ -110,8 +109,8 @@ public class DosarUtils {
         int counter = 1;
         for (String pdfURL : listOfURLs) {
 
-            // No more than 15 files
-            if(counter==15) break;
+            // Download no more than 15 files
+            if (counter == 15) break;
             System.out.println(pdfURL);
             try {
                 System.out.println("Opening connection");
@@ -119,14 +118,14 @@ public class DosarUtils {
                 InputStream in = url.openStream();
                 FileOutputStream fos = new FileOutputStream(new File(String.format(PATH_TO_DIRECTORY + "/PDF_%d.pdf", counter++)));
 
-
-                System.out.println("Reading from resource and writing to file...");
+                System.out.println("Reading from resource and writing to file to "+PATH_TO_DIRECTORY);
                 int length = -1;
                 byte[] buffer = new byte[1024];// buffer for portion of data from connection
                 while ((length = in.read(buffer)) > -1) {
 
                     fos.write(buffer, 0, length);
                 }
+
                 System.out.println("Closing connection");
                 fos.close();
                 in.close();
@@ -141,35 +140,32 @@ public class DosarUtils {
     /*
     / Converting a list of String Ordins to a list of Ordins objects.
     */
-    public static List<Ordin> convertoOrdinsObjects(List<String> listOfStringOrdins, List<String>urls) {
-        System.out.println("Conversion started");
+    public static List<Ordin> convertoOrdinsObjects(List<String> listOfStringOrdins, List<String> urls) {
 
+        System.out.println("Conversion to Ordin objects started");
         //List<String> urls = DosarUtils.getListOfURLsFromANPC();
         List<Ordin> listOfOrdins = new ArrayList<Ordin>();
 
-
-        // Regular expressions
+        // Regular expression used to find casenumbers
         String caseRegex = "[0-9]{1,6}(/)[0-9]{4}";
 
         // Setting pattern
         Pattern casePattern = Pattern.compile(caseRegex);
 
-        System.out.println("Starting to match Ordin date and case numbers");
-
+        System.out.println("Starting to find case numbers");
         for (int index = 0; index < listOfStringOrdins.size(); index++) {
 
             List<String> listOfCaseNumbers = new ArrayList<String>();
-
             Matcher caseMatcher = casePattern.matcher(listOfStringOrdins.get(index));
 
             //Matching all case numbers in Ordin file
             while (caseMatcher.find()) {
                 listOfCaseNumbers.add(caseMatcher.group());
             }
-
+            //Saving ordins with list of casenumbers to list
             listOfOrdins.add(new Ordin().setUrl(urls.get(index)).setCaseNumbers(listOfCaseNumbers));
         }
-        System.out.println("Conversion finished");
+        System.out.println("Conversion to Ordin objects finished");
         System.out.println("Number of ordins processed :" + listOfStringOrdins.size());
 
         return listOfOrdins;

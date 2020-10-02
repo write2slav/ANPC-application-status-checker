@@ -2,6 +2,7 @@ package com.ponezha.slava.ancp;
 
 import com.ponezha.slava.ancp.model.Ordin;
 import com.ponezha.slava.ancp.repos.OrdinsRepo;
+import com.ponezha.slava.ancp.services.OrdinService;
 import com.ponezha.slava.ancp.utils.DosarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -22,27 +23,13 @@ public class AncpApplication {
 	}
 
 	@Autowired
-	private OrdinsRepo ordinsRepo;
+	private OrdinService ordinService;
 
 	@Scheduled(fixedRateString = "PT3H")
 	void updateDB(){
 
 		System.out.println("Task started");
-		//Diff from lists of urls from DB and url list on ANCP website
-		List<String> urlOnANCP = DosarUtils.getListOfURLsFromANPC();
-		List<String> urlsInDb =((List<Ordin>) ordinsRepo.findAll()).stream().map(ordin -> ordin.getUrl()).collect(Collectors.toList());
-
-		urlOnANCP.removeAll(urlsInDb);
-		List<String> missingUrls = urlOnANCP;
-
-		if (missingUrls.size()>0) {
-			System.out.println("Adding missing ordins to DB");
-
-			DosarUtils.downloadPDFfilesFromList(missingUrls);
-			List<Ordin> ordins = DosarUtils.convertoOrdinsObjects(DosarUtils.getOrdinsTextFromPDFFiles(), missingUrls);
-			ordinsRepo.saveAll(ordins);
-
-		}
+		ordinService.checkForNewOrdins();
 		System.out.println("Task finished");
 	}
 
