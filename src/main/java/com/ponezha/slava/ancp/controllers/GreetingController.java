@@ -26,7 +26,7 @@ public class GreetingController {
     public String search(@RequestParam(name = "caseNumber", required = true, defaultValue = "") String name, Model model) {
 
         if (name.length() < 6) {
-            model.addAttribute("message", "Пожалуйста, введите минимум 6 цифр номера досара в указанном в примере формате");
+            model.addAttribute("message", "Пожалуйста, введите минимум 6 цифр номера досара в указанном в примере формате.");
             return "search";
         }
         if (ordinsRepo.findByCaseNumber(name).size() == 0) {
