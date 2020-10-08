@@ -14,6 +14,11 @@ public class GreetingController {
 
     @GetMapping
     public String searchPage(String name, Model model) {
+        model.addAttribute("year2017", ordinsRepo.getCasesProcessedFor("/2017"));
+        model.addAttribute("year2018", ordinsRepo.getCasesProcessedFor("/2018"));
+        model.addAttribute("year2019", ordinsRepo.getCasesProcessedFor("/2019"));
+
+
         return "search";
     }
 
@@ -24,6 +29,9 @@ public class GreetingController {
 
     @GetMapping("/search")
     public String search(@RequestParam(name = "caseNumber", required = true, defaultValue = "") String name, Model model) {
+        model.addAttribute("year2017", ordinsRepo.getCasesProcessedFor("/2017"));
+        model.addAttribute("year2018", ordinsRepo.getCasesProcessedFor("/2018"));
+        model.addAttribute("year2019", ordinsRepo.getCasesProcessedFor("/2019"));
 
         if (name.length() < 6) {
             model.addAttribute("message", "Пожалуйста, введите минимум 6 цифр номера досара в указанном в примере формате.");

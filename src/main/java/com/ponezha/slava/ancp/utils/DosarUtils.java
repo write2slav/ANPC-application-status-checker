@@ -80,7 +80,7 @@ public class DosarUtils {
         Document doc = null;
 
         try {
-            doc = Jsoup.connect(URL).get();
+            doc = Jsoup.connect(URL).timeout(100*1000).get();
         } catch (IOException e) {
             System.out.println(e);
         }
