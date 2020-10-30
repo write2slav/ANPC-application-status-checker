@@ -109,8 +109,8 @@ public class DosarUtils {
         int counter = 1;
         for (String pdfURL : listOfURLs) {
 
-            // Download no more than 150 files
-            if (counter == 150) break;
+            // Download no more than 15 files
+            if (counter == 15) break;
             System.out.println(pdfURL);
             try {
                 System.out.println("Opening connection");
