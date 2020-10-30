@@ -75,7 +75,7 @@ public class DosarUtils {
     public static List<String> getListOfURLsFromANPC() {
 
         // Step one: Parse a HTML documen.
-        final String URL = "http://cetatenie.just.ro/index.php/ro/ordine/articol-11";
+        final String URL = "http://cetatenie.just.ro/ordine/#1578313750617-4f53573c-3c20";
         final String baseURL = "http://cetatenie.just.ro/";
         Document doc = null;
 
@@ -95,7 +95,7 @@ public class DosarUtils {
         //Adding base URL to the link
         //Using stream:
         //linkElements.stream().forEach(element -> listOfURLs.add(baseURL + element.attr("href")));
-        for (Element element : linkElements) listOfURLs.add(baseURL + element.attr("href"));
+        for (Element element : linkElements) listOfURLs.add(element.attr("href"));
 
         return listOfURLs;
     }
