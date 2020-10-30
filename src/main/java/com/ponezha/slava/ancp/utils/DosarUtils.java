@@ -86,7 +86,7 @@ public class DosarUtils {
         }
 
         //Step two: Use Css selector to select all the <a> elements that contain "images" in "href attribute.CSS selector: div a[href*="images"].
-        Elements linkElements = doc.select("div a[href*=\"images\"]");
+        Elements linkElements = doc.select("div a[href*=\".pdf\"]");
 
         // Step three: concatinating link of PDF resource to base URL.
         // List for storing string values of URLs that lead to PDF files of decisions made by ANPC.
@@ -109,8 +109,8 @@ public class DosarUtils {
         int counter = 1;
         for (String pdfURL : listOfURLs) {
 
-            // Download no more than 15 files
-            if (counter == 15) break;
+            // Download no more than 150 files
+            if (counter == 150) break;
             System.out.println(pdfURL);
             try {
                 System.out.println("Opening connection");

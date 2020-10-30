@@ -21,8 +21,8 @@ public class OrdinService {
         List<String> urlsInDb = ((List<Ordin>) ordinsRepo.findAll()).stream().map(Ordin::getUrl).collect(Collectors.toList());
 
         //Save only missing urls to a list
-        urlOnANCP.removeAll(urlsInDb);
-        List<String> missingUrls = urlOnANCP;
+        List<String> missingUrls = urlOnANCP.stream().filter(url->!urlsInDb.contains(url)).collect(Collectors.toList());
+        missingUrls.stream().forEach(System.out::println);
 
         if (missingUrls.size() > 0) {
             System.out.println("Number of new ordins: " + missingUrls.size());
